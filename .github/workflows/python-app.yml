@@ -1,0 +1,27 @@
+name: CI Pipeline
+
+on: [push] # Запускати при кожному push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # На якій машині запускати
+
+    steps:
+    # 1. Крок: Отримати код з репозиторію
+    - uses: actions/checkout@v3
+
+    # 2. Крок: Налаштувати Python
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    # 3. Крок: Встановити залежності
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt # Встановлюємо pytest з нашого файлу
+
+    # 4. Крок: Запустити тести
+    - name: Run tests
+      run: pytest # Ця команда знайде і запустить test_calculator.py
